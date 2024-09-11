@@ -1,0 +1,10 @@
+version: 1.0
+runtime: python3.12
+build:
+  commands:
+    - pip3 install -r requirements.txt
+    - python3 manage.py collectstatic --noinput
+    - python3 manage.py migrate
+start:
+  commands:
+    - python3 manage.py runserver
