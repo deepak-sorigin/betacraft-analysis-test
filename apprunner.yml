@@ -1,10 +1,21 @@
 version: 1.0
 runtime: python311
+
+source:
+  type: git
+  repository:
+    url: https://github.com/deepak-sorigin/betacraft-analysis-test.git
+    branch: main
+
 build:
   commands:
-    - pip3 install -r requirements.txt
-    - python3 manage.py collectstatic --noinput
-    - python3 manage.py migrate
-start:
-  commands:
-    - python3 manage.py runserver
+    install:
+      - python3 -m venv env
+      - source env/bin/activate
+      - pip3 install -r requirements.txt
+      - django-admin --version
+    build:
+      - python3 manage.py collectstatic --noinput
+      - python3 manage.py migrate
+run:
+  command: gunicorn DjangoAppRunnerTest.wsgi:application --bind 0.0.0.0:8000
